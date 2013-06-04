@@ -15,11 +15,13 @@ require 'active_support/core_ext/time/marshal'
 require 'active_support/core_ext/time/publicize_conversion_methods'
 require 'active_support/core_ext/time/zones'
 
-base_dir = '/Users/noahlively/git_workspace/fcc_livestream_file_watcher/pending'
-dest_dir = '/Users/noahlively/git_workspace/fcc_livestream_file_watcher/processed'
+base_dir = '/Users/livestream/Movies'
+dest_dir = '/Users/livestream/Movies/processed'
 
-extension = 'flv'
-files = Dir.glob(base_dir + "/*." + extension)
+extension = 'mp4'
+offset = 1.hour
+
+files = Dir.glob(base_dir + "/RecordedLiveStream*." + extension)
 
 service_times = [
   { :dow => 0, :start => '11:00', :end => '13:30', :label => 'Sunday Morning', :namepart => 'sunday_morning' },
@@ -27,9 +29,7 @@ service_times = [
   { :dow => 2, :start => '19:00', :end => '21:30', :label => 'Tuesday Evening', :namepart => 'tuesday_evening' }
 ]
 
-offset = 1.hour
-
-
+# Loop through all unprocessed files found in the folder
 files.each do |file|
 
   timestamp = File.mtime(file)
