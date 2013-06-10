@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
 
 gem 'activesupport'
 
@@ -76,8 +77,8 @@ files.each do |file|
     dest_file = dest + '.' + extension
     i = 1
     loop do
-      if File.exists(dest_file)
-        dest_file = sprintf('%s_%2d.%s', dest, i, extension)
+      if File.exists?(dest_file)
+        dest_file = sprintf('%s_%02d.%s', dest, i, extension)
         i=i+1
       else
         File.rename(file, dest_file)
