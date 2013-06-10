@@ -66,14 +66,26 @@ files.each do |file|
   end
   
     if found
-      filename = sprintf('%s_%s.%s', filename_datepart, @filename_namepart, extension)    
+      filename = sprintf('%s_%s', filename_datepart, @filename_namepart)    
     else
-      filename = sprintf('%s_%s.%s', filename_datepart, filename_timepart, extension) 
+      filename = sprintf('%s_%s', filename_datepart, filename_timepart) 
     end
     
     dest = sprintf('%s/%s', dest_dir, filename)
+   
+    dest_file = dest + '.' + extension
+    i = 1
+    loop do
+      if File.exists(dest_file)
+        dest_file = sprintf('%s_%2d.%s', dest, i, extension)
+        i=i+1
+      else
+        File.rename(file, dest_file)
+        break
+      end
+    end
     
-    File.rename(file, dest)
+    
     
     puts filename
     puts ''
